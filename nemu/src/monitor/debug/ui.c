@@ -71,6 +71,20 @@ static int cmd_info(char *args){
 	return 0;
 }
 
+static int cmd_x(char *args){
+	int num_byte = atoi(strtok(args," "));
+	int address = atoi(strtok(NULL," "));
+	int i=0;
+	int *p;
+	p=(int*)address;
+	for(i=0;i<num_byte;i++)
+	{
+		printf("Adress=%x: %x\n",address,*p);
+		p++;
+	}
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -82,7 +96,8 @@ static struct {
 
 	/* TODO: Add more commands */
     { "si", "excute single instruction", cmd_si },   
-	{ "info","print the values of registers",cmd_info },
+	{ "info","print the values of registers", cmd_info },
+	{ "x", "print N bytes at special address", cmd_x },
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
