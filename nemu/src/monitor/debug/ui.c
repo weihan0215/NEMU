@@ -2,7 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
-
+#include "cpu/reg.h"
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -38,6 +38,39 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+/* add more function*/
+static int cmd_si(char *args){
+	if(args==NULL)
+	{
+		cpu_exec(1);
+	}
+	else
+	{
+		cpu_exec(atoi(args));
+	}
+	return 0;
+}
+	
+static int cmd_info(char *args){
+	if(strcmp(args,"r")==0)
+	{
+		printf("EAX=0x%x\n",reg_l(0));
+		printf("EDX=0x%x\n",reg_l(1));
+		printf("ECX=0x%x\n",reg_l(2));
+		printf("EBX=0x%x\n",reg_l(3));
+		printf("EBP=0x%x\n",reg_l(4));
+		printf("ESI=0x%x\n",reg_l(5));
+		printf("EDI=0x%x\n",reg_l(6));
+		printf("ESP=0x%x\n",reg_l(7));
+		printf("EIP=0x%x\n",cpu.eip);
+	}
+	else
+	{
+		printf("Please input correct argument for info command\n");
+	}
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -48,7 +81,8 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 
 	/* TODO: Add more commands */
-
+    { "si", "excute single instruction", cmd_si },   
+	{ "info","print the values of registers",cmd_info },
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
