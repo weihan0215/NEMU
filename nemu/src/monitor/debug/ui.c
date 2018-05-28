@@ -79,7 +79,7 @@ static int cmd_x(char *args){
 	p=(int*)address;
 	for(i=0;i<num_byte;i++)
 	{
-		printf("Adress=%x: %x\n",address,*p);
+		printf("Address=%x: %x\n",address,*p);
 		p++;
 	}
 	return 0;
