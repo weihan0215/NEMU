@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
+int str2intcore(char *args);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -25,6 +26,28 @@ char* rl_gets() {
 	}
 
 	return line_read;
+}
+
+int str2int(char *args){
+	int integer = 0;
+	if(args[0]=='0' && args[1]=='x')
+	{
+	/*	char *temp = &args[2]; */
+	}
+	else
+	{
+		integer = str2intcore(args);
+	}
+	return integer;
+}
+int str2intcore(char *args){
+	int sum = 0;
+	while(*args!='\0')
+	{	
+		sum = sum*10 + *args - '0';
+		args++;
+	}
+	return sum;
 }
 
 static int cmd_c(char *args) {
@@ -46,7 +69,7 @@ static int cmd_si(char *args){
 	}
 	else
 	{
-		cpu_exec(atoi(args));
+		cpu_exec(str2int(args));
 	}
 	return 0;
 }
